@@ -1,46 +1,78 @@
-import Solver from './Solver';
+import React, { useState } from 'react';
+import * as math from 'mathjs';
+import '../styles/SolverPanel.css';
 
-class NumericalIntegrationSolver extends Solver {
-  solve() {
-    const { func, a, b, n } = this.inputs;
-    if (!func || isNaN(a) || isNaN(b) || isNaN(n)) throw new Error('Invalid inputs');
-    const h = (b - a) / n;
-    let sum = 0;
-    for (let i = 0; i <= n; i++) {
-      const x = a + i * h;
-      const y = eval(func.replace('x', x)); // Simplified evaluation
-      sum += i === 0 || i === n ? y : 2 * y;
-    }
-    return { area: (h / 2) * sum };
-  }
+const NumericalIntegrationSolver = ({ addExpression }) => {
+  const [func, setFunc] = useState('x^2');
+  const [a, setA] = useState(0);
+  const [b, setB] = useState(1);
+  const [n, setN] = useState(100);
+  const [result, setResult] = useState(null);
 
-  getSteps() {
-    const { a, b, n } = this.inputs;
-    return [
-      `Step size: h = (${b} - ${a})/${n} = ${(b - a) / n}`,
-      `Apply trapezoidal rule: Area ≈ (h/2) * (f(x0) + 2f(x1) + ... + f(xn))`,
-    ];
-  }
+  const trapezoidalRule = () => {
+    try {
+      const scope = { x: 0 };
+      const compiledFunc = math.compile(func);
+      let sum = 0;
+      const h = (b - a) / n;
 
-  getGraphData(addExpression) {
-    const { func, a, b, n } = this.inputs;
-    addExpression({
-      id: `integral_${Date.now()}`,
-      latex: `y=${func}`,
-      color: '#ff006e',
-    });
-    const h = (b - a) / n;
-    for (let i = 0; i < n; i++) {
-      const x1 = a + i * h;
-      const x2 = x1 + h;
+      // Evaluate at endpoints
+      scope.x = a;
+      sum += compiledFunc.evaluate(scope);
+      scope.x = b;
+      sum += compiledFunc.evaluate(scope);
+
+      // Evaluate at interior points
+      for (let i = 1; i < n; i++) {
+        scope.x = a + i * h;
+        sum += 2 * compiledFunc.evaluate(scope);
+      }
+
+      const integral = (h / 2) * sum;
+      setResult(integral);
+
+      // Add the function to the graph
       addExpression({
-        id: `trap_${i}_${Date.now()}`,
-        latex: `y \\in [0, ${func}](x \\in [${x1}, ${x2}])`,
-        color: '#00ff00',
-        fillOpacity: 0.3,
+        id: `int_${Date.now()}`,
+        latex: `${func}`,
+        color: '#ff0000',
       });
+    } catch (error) {
+      alert('Invalid function or parameters');
     }
-  }
-}
+  };
+
+  return (
+    <div className="solver">
+      <h3>Numerical Integration (Trapezoidal Rule)</h3>
+      <input
+        type="text"
+        value={func}
+        onChange={(e) => setFunc(e.target.value)}
+        placeholder="Enter function (e.g., x^2)"
+      />
+      <input
+        type="number"
+        value={a}
+        onChange={(e) => setA(parseFloat(e.target.value))}
+        placeholder="Lower bound"
+      />
+      <input
+        type="number"
+        value={b}
+        onChange={(e) => setB(parseFloat(e.target.value))}
+        placeholder="Upper bound"
+      />
+      <input
+        type="number"
+        value={n}
+        onChange={(e) => setN(parseInt(e.target.value))}
+        placeholder="Number of intervals"
+      />
+      <button onClick={trapezoidalRule}>Calculate</button>
+      {result !== null && <p>Result: {result.toFixed(6)}</p>}
+    </div>
+  );
+};
 
 export default NumericalIntegrationSolver;
