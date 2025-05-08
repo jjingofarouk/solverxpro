@@ -46,7 +46,7 @@ const App = () => {
   };
 
   return (
-   ]][div className="App">
+    <div className="App">
       <div className="sidebar">
         <img src={logo} alt="SolverPro Logo" className="logo" />
         <FunctionList
@@ -64,7 +64,10 @@ const App = () => {
           saveWorkspace={saveWorkspace}
           loadWorkspace={loadWorkspace}
         />
-        <GraphingCalculator expressions={expressions} onExpressionSelect={selectExpression} />
+        <GraphingCalculator
+          expressions={expressions}
+          onExpressionSelect={selectExpression}
+        />
       </div>
     </div>
   );
