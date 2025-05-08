@@ -1,0 +1,51 @@
+.function-list {
+  margin-bottom: 20px;
+}
+
+.function-list h3 {
+  margin: 0 0 10px;
+}
+
+.function-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.function-input input[type="text"] {
+  flex: 1;
+  padding: 5px;
+}
+
+.function-input input[type="color"] {
+  width: 30px;
+}
+
+.function-input button {
+  padding: 5px 10px;
+}
+
+.function-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.function-list li {
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.function-list li:hover {
+  background: #e0e0e0;
+}
+
+.function-list li button {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 3px 8px;
+  cursor: pointer;
+}
