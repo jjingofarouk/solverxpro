@@ -3,7 +3,6 @@ import GraphingCalculator from './components/GraphingCalculator';
 import FunctionList from './components/FunctionList';
 import SolverPanel from './components/SolverPanel';
 import Controls from './components/Controls';
-import logo from './assets/logo.png';
 import './styles/App.css';
 
 const App = () => {
@@ -48,7 +47,7 @@ const App = () => {
   return (
     <div className="App">
       <div className="sidebar">
-        <img src={logo} alt="SolverPro Logo" className="logo" />
+        <img src="/assets/logo.png" alt="SolverPro Logo" className="logo" />
         <FunctionList
           expressions={expressions}
           addExpression={addExpression}
