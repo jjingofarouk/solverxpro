@@ -65,6 +65,7 @@ const App = () => {
         />
         <GraphingCalculator
           expressions={expressions}
+          selectedExpression={selectedExpression}
           onExpressionSelect={selectExpression}
         />
       </div>
