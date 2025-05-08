@@ -1,0 +1,48 @@
+.solver-panel {
+  margin-bottom: 20px;
+}
+
+.solver-panel h3 {
+  margin: 0 0 10px;
+}
+
+.solver-panel select {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+#solver-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#solver-inputs input,
+#solver-inputs select {
+  padding: 5px;
+}
+
+.solver-panel button {
+  padding: 8px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.solution-output {
+  margin-top: 20px;
+}
+
+.solution-output pre {
+  background: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.solution-output ul {
+  list-style: decimal;
+  padding-left: 20px;
+}
